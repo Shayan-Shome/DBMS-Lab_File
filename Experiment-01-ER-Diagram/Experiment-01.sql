@@ -1,0 +1,87 @@
+-- ============================================================
+-- DBMS Laboratory File
+-- Experiment 01 : ER Diagram for Indian E-Commerce Platform
+-- CO1
+-- ============================================================
+-- NOTE: This experiment is a DESIGN task. There is no SQL code
+--       to execute here. The ER diagram is drawn on paper
+--       (pencil) and the PDF scan is placed in this folder.
+--       Below is the textual specification of the diagram.
+-- ============================================================
+
+-- ------------------------------------------------------------
+-- ENTITIES AND PRIMARY KEYS
+-- ------------------------------------------------------------
+-- Customer    : customer_id (PK)
+-- Product     : product_id  (PK)
+-- Order       : order_id    (PK)
+-- OrderItem   : (order_id, product_id)  <-- composite PK
+-- Seller      : seller_id   (PK)
+-- Category    : category_id (PK)
+-- Payment     : payment_id  (PK)
+-- Delivery    : delivery_id (PK)
+-- Address     : address_id  (PK)
+
+-- ------------------------------------------------------------
+-- COMPOSITE ATTRIBUTES
+-- ------------------------------------------------------------
+-- Customer.name  -> (first_name, last_name)
+-- Customer.phone -> (country_code, number)
+-- Address        -> (line1, line2, city, state, pincode)
+
+-- ------------------------------------------------------------
+-- MULTI-VALUED ATTRIBUTES  (drawn as double ellipses)
+-- ------------------------------------------------------------
+-- Customer.email      (a customer may have many emails)
+-- Customer.phone      (a customer may have many phones)
+-- Seller.contact_no   (a seller may have many contact numbers)
+
+-- ------------------------------------------------------------
+-- WEAK ENTITIES
+-- ------------------------------------------------------------
+-- OrderItem is a WEAK entity dependent on Order.
+--   Discriminator : product_id (partial key)
+--   Identifying owner : Order
+-- Delivery is a WEAK entity dependent on Order.
+--   Discriminator : delivery_id
+--   Identifying owner : Order
+
+-- ------------------------------------------------------------
+-- SPECIALIZATION OF PRODUCT
+-- ------------------------------------------------------------
+-- Product (superclass)  --d--  {Electronics, Clothing, Grocery, Books}
+-- Disjoint (d) : a product belongs to exactly one sub-category.
+-- Attributes of Electronics : warranty_months, voltage
+-- Attributes of Clothing    : size, fabric
+-- Attributes of Grocery     : expiry_date, weight_kg
+-- Attributes of Books       : isbn, author, publisher
+
+-- ------------------------------------------------------------
+-- RELATIONSHIPS AND PARTICIPATION CONSTRAINTS
+-- ------------------------------------------------------------
+-- Customer  --places--> Order          : 1:N  ; Customer total, Order total
+-- Order     --contains--> OrderItem    : 1:N  ; OrderItem total (identifying)
+-- Product   --in--> OrderItem          : 1:N  ; Product partial
+-- Seller    --sells--> Product         : 1:N  ; Seller total
+-- Category  --classifies--> Product    : 1:N  ; Product total
+-- Order     --paid_by--> Payment       : 1:1  ; both total
+-- Order     --shipped_via--> Delivery  : 1:1  ; Delivery total (identifying)
+-- Customer  --has--> Address           : 1:N  ; Customer total
+-- Address   --used_for--> Order        : 1:N  ; Order total
+
+-- ------------------------------------------------------------
+-- CARDINALITY RATIOS (Chen notation)
+-- ------------------------------------------------------------
+-- Places      : 1 : N
+-- Contains    : 1 : N
+-- In          : N : 1
+-- Sells       : 1 : N
+-- Classifies  : 1 : N
+-- Paid_by     : 1 : 1
+-- Shipped_via : 1 : 1
+-- Has         : 1 : N
+-- Used_for    : 1 : N
+
+-- ============================================================
+-- END OF EXPERIMENT 01
+-- ============================================================
